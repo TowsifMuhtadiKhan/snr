@@ -51,7 +51,7 @@ export default function ButtonAppBar() {
             <NavLink label="Contact Us" />
           </Box>
           <Button color="inherit" style={{ color: 'White' , backgroundColor: '#3486eb'}}>
-            Login
+           Create New Post
           </Button>
         </Toolbar>
       </AppBar>
