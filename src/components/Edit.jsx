@@ -1,16 +1,38 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import axios from 'axios';
 
 const Edit = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+
+  const [postData, setPostData] = useState({
+    id: '',
     title: '',
     description: '',
   });
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  useEffect(() => {
+    // Fetch data for the specified post ID
+    axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+      .then((response) => {
+        console.log('Fetched data:', response.data);
+  
+        const { title, body } = response.data;
+        setPostData({
+          id,
+          title,
+          description: body,
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, [id]);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -21,16 +43,17 @@ const Edit = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setPostData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
+    console.log('PostData after handleChange:', postData);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle form submission logic here, such as sending data to a server
-    console.log('Form data submitted:', formData);
+    console.log('Form data submitted:', postData);
 
     // Display success message using Snackbar
     setOpenSnackbar(true);
@@ -45,10 +68,12 @@ const Edit = () => {
   return (
     <div>
       <div style={{ width: '50%', margin: 'auto' }}>
-        <h1>Enter Title and Description</h1>
+        <h1>Edit Post</h1>
       </div>
 
       <form onSubmit={handleSubmit} style={{ width: '50%', margin: 'auto' }}>
+        
+
         <div style={{ marginBottom: '15px' }}>
           <label htmlFor="title">Title:</label>
           <br />
@@ -56,7 +81,7 @@ const Edit = () => {
             type="text"
             id="title"
             name="title"
-            value={formData.title}
+            value={postData.title}
             onChange={handleChange}
             style={{ width: '100%', boxSizing: 'border-box', padding: '8px', marginTop: '8px' }}
           />
@@ -69,7 +94,7 @@ const Edit = () => {
           name="description"
           rows="5"
           cols="50"
-          value={formData.description}
+          value={postData.description}
           onChange={handleChange}
           style={{ width: '100%', boxSizing: 'border-box', marginTop: '8px' }}
         ></textarea>
