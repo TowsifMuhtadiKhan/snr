@@ -8,12 +8,13 @@ import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
+import { Link} from 'react-router-dom';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const MediaCard = ({ title, description, imageUrl, onEdit, onDelete }) => {
+const MediaCard = ({ title, description, imageUrl, onEdit, onDelete, id }) => {
   return (
     <Card sx={{ maxWidth: 300, display: 'flex', flexDirection: 'column' }}>
       <CardMedia sx={{ height: 150 }} image={imageUrl} />
@@ -28,9 +29,11 @@ const MediaCard = ({ title, description, imageUrl, onEdit, onDelete }) => {
         </div>
         <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', width: '100%', gap: '10px' }}>
+          <Link to={`/posts/${id}`} style={{ textDecoration: 'none' }}>
             <Button variant="contained" style={{ backgroundColor: '#50B0FA', color: 'white', flex: '1' }} onClick={onEdit}>
               Edit
             </Button>
+            </Link>
             <Button variant="contained" style={{ backgroundColor: '#FE5858', color: 'white', flex: '1' }} onClick={onDelete}>
               Delete
             </Button>
@@ -80,6 +83,7 @@ const CardList = () => {
           key={card.id}
           title={card.title}
           description={card.body}
+          id={card.id}
           imageUrl="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/How-to-Create-an-Online-Course-For-Free--Complete-Guide--6.jpg"
           onEdit={() => handleEdit(card.id)}
           onDelete={() => handleDelete(card.id)}
