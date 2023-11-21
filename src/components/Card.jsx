@@ -8,8 +8,8 @@ import axios from 'axios';
 
 const MediaCard = ({ title, description, imageUrl }) => {
     return (
-      <Card sx={{ maxWidth: 250 }}>
-        <CardMedia sx={{ height: 140 }} image={imageUrl} title={title} />
+      <Card sx={{ maxWidth: 300 }}>
+        <CardMedia sx={{ height: 150 }} image={imageUrl}  />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}
@@ -29,7 +29,7 @@ const MediaCard = ({ title, description, imageUrl }) => {
       // Fetch data from the JSONPlaceholder API
       axios.get('https://jsonplaceholder.typicode.com/posts')
         .then(response => {
-          setCards(response.data.slice(0, 20)); // Limit to the first 20 posts for this example
+          setCards(response.data.slice(0, 100)); // Limit to the first 20 posts for this example
         })
         .catch(error => {
           console.error('Error fetching data:', error);
@@ -37,7 +37,7 @@ const MediaCard = ({ title, description, imageUrl }) => {
     }, []);
   
     return (
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', margin: '20px 0', justifyContent: 'space-evenly' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', margin: '20px 20px', justifyContent: 'space-evenly' }}>
         {cards.map(card => (
           <MediaCard
             key={card.id}
