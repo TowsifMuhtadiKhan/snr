@@ -15,10 +15,44 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const MediaCard = ({ title, description, imageUrl, onDelete, id, setSnackbarOpen, setSnackbarSeverity }) => {
+  // slice the title to show limited title
+  const truncatedTitle = title.length > 20 ? `${title.slice(0, 20)}...` : title;
+
+//---------------------------------------------------------------------------------
+
+  //Slice description
+  // const [showFullDescription, setShowFullDescription] = useState(false);
+  // const truncateDescription = (text, limit) => {
+  //   const words = text.split(' ');
+  //   return words.slice(0, limit).join(' ');
+  // };
+
+  // const truncatedDescription = showFullDescription ? description : truncateDescription(description, 10);
+
+//--------------------------------------------------------------------------------
+
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const truncateDescription = (text, lines) => {
+    const paragraphs = text.split('\n');
+    const truncatedParagraphs = paragraphs.slice(0, lines);
+    return truncatedParagraphs.join('\n');
+  };
+
+  const truncatedDescription = showFullDescription ? description : truncateDescription(description, 2); // Adjust the number of lines as needed
+
+  const handleReadMoreClick = () => {
+    setShowFullDescription(true);
+  };
+
+  const handleReadLessClick = () => {
+    setShowFullDescription(false);
+  };
+
   const handleDelete = async () => {
     try {
       // Make a DELETE request to your API endpoint
-      await axios.delete(`https://your-api-url/posts/${id}`);
+      await axios.delete(`https://jsonplaceholder.typicode.com/${id}`);
 
       // Show a success message
       onDelete(id);
@@ -38,21 +72,38 @@ const MediaCard = ({ title, description, imageUrl, onDelete, id, setSnackbarOpen
       <CardMedia sx={{ height: 150 }} image={imageUrl} />
       <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
+          <Typography gutterBottom variant="h5" component="div" title={title} fontWeight='500'>
+            {truncatedTitle}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description}
+          <Typography variant="body2" color="text.secondary" textAlign={'justify'} fontWeight='430'>
+          {truncatedDescription}
           </Typography>
+          {!showFullDescription && (
+             <Button
+             style={{ background: 'none', padding: 0, cursor: 'pointer', color:'#585858', fontWeight: 'bold', paddingTop:'10px' }}
+             onClick={handleReadMoreClick}
+          >
+            Read More
+           </Button>
+              )}
+              {showFullDescription && (
+            <Button
+              style={{ background: 'none', padding: 0, cursor: 'pointer', color: '#585858', fontWeight: 'bold', paddingTop:'10px'}}
+              onClick={handleReadLessClick}
+              
+            >
+            Read Less
+            </Button>
+          )}
         </div>
         <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', width: '100%', gap: '10px' }}>
-            <Link to={`/posts/${id}`} style={{ textDecoration: 'none' }}>
-              <Button variant="contained" style={{ backgroundColor: '#50B0FA', color: 'white', flex: '1' }}>
+            <Link to={`/posts/${id}`} style={{ textDecoration: 'none', width: '48%' }}>
+              <Button variant="contained" style={{ backgroundColor: '#50B0FA', color: 'white', flex: '1', width: '100%'}}>
                 Edit
               </Button>
             </Link>
-            <Button variant="contained" style={{ backgroundColor: '#FE5858', color: 'white', flex: '1' }} onClick={handleDelete}>
+            <Button variant="contained" style={{ backgroundColor: '#FE5858', color: 'white', flex: '1' ,width: '48%'}} onClick={handleDelete}>
               Delete
             </Button>
           </div>
