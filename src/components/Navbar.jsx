@@ -31,16 +31,11 @@ export default function ButtonAppBar() {
         <AppBar position="static" sx={{ backgroundColor: '#FFFFFF', width: '100%' }}>
           <Toolbar sx={{ width: '70%', margin: '0 auto', textAlign: 'center' }}>
             <Link to="/">
-              {/* Logo on the left */}
               <img src={respond} alt="logo" style={{ marginRight: '10px', maxHeight: '50px' }} />
             </Link>
-
-            {/* Spacer to push the "Create New Post" button to the right */}
             <Box sx={{ flexGrow: 1 }} />
-
-            {/* Button to create a new post */}
             <Link to="/posts" style={{ textDecoration: 'none' }}>
-              <Button color="inherit" style={{ color: 'White', backgroundColor: '#3486eb' }}>
+              <Button color="inherit" style={{ color: 'White', backgroundColor: '#1171B9' }}>
                 Create New Post
               </Button>
             </Link>
