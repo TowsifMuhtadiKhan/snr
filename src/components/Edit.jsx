@@ -1,12 +1,16 @@
+// Edit.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { updatePost } from '../features/cardSlice';
+import { API_BASE_URL } from '../constants/apiConstants';
 
 const Edit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [postData, setPostData] = useState({
     id: '',
@@ -19,19 +23,27 @@ const Edit = () => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   useEffect(() => {
-    // Fetch data for the specified post ID
-    axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((response) => {
-        const { title, body } = response.data;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/posts/${id}`);
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const { title, body } = await response.json();
+
         setPostData({
           id,
           title,
           description: body,
         });
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error fetching data:', error);
-      });
+      }
+    };
+
+    fetchData();
   }, [id]);
 
   const handleSnackbarClose = (event, reason) => {
@@ -47,50 +59,55 @@ const Edit = () => {
       ...prevData,
       [name]: value,
     }));
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    // Determine the HTTP method based on the presence of the id
+
     const httpMethod = id ? 'put' : 'post';
-  
-    // Send the appropriate request to your API endpoint
-    axios({
+
+    fetch(`${API_BASE_URL}/posts${id ? `/${id}` : ''}`, {
       method: httpMethod,
-      url: id ? `https://jsonplaceholder.typicode.com/posts/${id}` : 'https://jsonplaceholder.typicode.com/posts',
-      data: postData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
     })
       .then((response) => {
-        console.log(`${httpMethod.toUpperCase()} request successful:`, response.data);
-  
-        // Display success message using Snackbar
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(`${httpMethod.toUpperCase()} request successful:`, data);
+
+        dispatch(updatePost(postData));
+
         setSnackbarSeverity('success');
         setSnackbarMessage('Form submitted successfully!');
         setOpenSnackbar(true);
-  
-        // Redirect to the previous page after a delay
+
         setTimeout(() => {
           setOpenSnackbar(false);
-          navigate(-1); // Go back to the previous page
-        }, 2000); // Adjust the delay as needed
+          navigate(-1);
+        }, 2000);
       })
       .catch((error) => {
         console.error(`Error ${httpMethod}ting form:`, error);
-  
-        // Display error message using Snackbar
+
         setSnackbarSeverity('error');
         setSnackbarMessage(`Error ${httpMethod}ting form. Please try again.`);
         setOpenSnackbar(true);
       });
   };
-  
+
   return (
     <div>
       <div style={{ width: '50%', margin: 'auto' }}>
         <h1>Edit Post</h1>
       </div>
-      <form onSubmit={handleSubmit} style={{ width: '50%', margin: 'auto' }}> 
+      <form onSubmit={handleSubmit} style={{ width: '50%', margin: 'auto' }}>
         <div style={{ marginBottom: '15px' }}>
           <label htmlFor="title">Title:</label>
           <br />

@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 import respond from "../assest/respond.png";
+import LoginIcon from '@mui/icons-material/Login';
 
 export default function ButtonAppBar() {
   const theme = createTheme({
@@ -36,8 +37,14 @@ export default function ButtonAppBar() {
             <Box sx={{ flexGrow: 1 }} />
             <Link to="/posts" style={{ textDecoration: 'none' }}>
               <Button color="inherit" style={{ color: 'White', backgroundColor: '#1171B9' }}>
-                Create New Post
+                Create Post
               </Button>
+              <Link to="/auth/login" style={{ textDecoration: 'none' }}>
+              <Button color="inherit" style={{ color: 'White',backgroundColor: '#1171B9', marginLeft: '10px'}}>
+                <LoginIcon />
+
+              </Button>
+            </Link>
             </Link>
           </Toolbar>
         </AppBar>
