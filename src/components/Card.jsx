@@ -46,7 +46,7 @@ const MediaCard = ({ title, description, imageUrl, onDelete, id, setSnackbarOpen
 
   return (
     <Card sx={{ maxWidth: 250, display: 'flex', flexDirection: 'column' }}>
-      <CardMedia sx={{ height: 150 }} image={imageUrl} />
+      <CardMedia sx={{ height: 200 }} image={imageUrl} />
       <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div>
           <Typography gutterBottom variant="h6" component="div" title={title} fontWeight="500">
@@ -57,7 +57,7 @@ const MediaCard = ({ title, description, imageUrl, onDelete, id, setSnackbarOpen
           </Typography>
           {!showFullDescription && (
             <Button
-              style={{ background: 'none', padding: 0, cursor: 'pointer', color: '#52a8ff', fontWeight: '300', paddingTop: '10px' }}
+              style={{ background: 'none', padding: 0, cursor: 'pointer', color: '#52a8ff', fontWeight: '350', paddingTop: '10px' }}
               onClick={handleReadMoreClick}
             >
               Read More<ArrowCircleDownOutlinedIcon style={{ fontSize: 15, marginLeft: 4, color: '#52a8ff' }} />
