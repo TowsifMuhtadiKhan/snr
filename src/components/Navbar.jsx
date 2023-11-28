@@ -65,6 +65,11 @@ export default function ButtonAppBar() {
             </Link>
             <Box sx={{ flexGrow: 1 }} />
             <div>
+            <Link to="/content-variable" style={{ textDecoration: 'none' }}>
+                <Button color="inherit" style={{marginRight: '10px', color: 'White', backgroundColor: '#1171B9' }}>
+                  Variable
+                </Button>
+              </Link>
               <Link to="/posts" style={{ textDecoration: 'none' }}>
                 <Button color="inherit" style={{ color: 'White', backgroundColor: '#1171B9' }}>
                   Create Post

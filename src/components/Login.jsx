@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -13,10 +12,12 @@ import MuiAlert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import axios from 'axios';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../features/authSlice';
 
 export default function LogIn() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [snackbarSeverity, setSnackbarSeverity] = React.useState('success');
@@ -41,11 +42,17 @@ export default function LogIn() {
 
     try {
       setLoading(true);
-      await axios.post('https://test-api.day2communications.com/company-mgmt/login', credentials, {
-        headers: {
-          'x-api-key': 'gS39AKNYfj371zGKH5MQK72X4WIALIa36IXwDTKI',
-        },
-      });
+      const response = await dispatch(loginUser(credentials));
+
+      // Extracting access token from the response
+      const accessToken = response.payload.data.localData.accessToken;
+
+      // Save x-api-key and accessToken to local storage
+      const xApiKey = 'RvIJaVSY9x3a98KXnkIaO42Q6OoIZcSi1OKCrPii';
+      localStorage.setItem('x-api-key', xApiKey);
+      
+      // Store the access token in local storage with the key "aceesstoken"
+      localStorage.setItem('accesstoken', accessToken);
 
       navigate('/');
       setOpenSnackbar(true);

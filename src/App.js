@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import Card from "./components/Card";
 import Edit from "./components/Edit";
 import Login from "./components/Login"; // Import the Edit component // Import the Edit component
-
+import Variable from "./components/Variable";
 function App() {
   return (
     <Router>
@@ -18,6 +18,7 @@ function App() {
           <Route path="/auth/login" element={<Login />} /> 
           <Route path="/" element={<Navbar />} />
           <Route path="/" element={<Footer />} />
+          <Route path="/content-variable" element={<Variable />} /> 
         </Routes>
         <Footer />
       </>
