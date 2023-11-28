@@ -45,7 +45,7 @@ const MediaCard = ({ title, description, imageUrl, onDelete, id, setSnackbarOpen
   };
 
   return (
-    <Card sx={{ maxWidth: 250, display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ maxWidth: 300, display: 'flex', flexDirection: 'column' }}>
       <CardMedia sx={{ height: 200 }} image={imageUrl} />
       <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div>
@@ -115,7 +115,7 @@ const CardList = () => {
 
   return (
     <div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'space-evenly', width: '80%', margin: '0 auto', marginTop: '20px', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'space-evenly', width: '90%', margin: '0 auto', marginTop: '20px', marginBottom: '20px' }}>
         {cards.slice(0, visibleCards).map((card) => (
           <MediaCard
           key={card.id}

@@ -34,8 +34,6 @@ export const updatePost = createAsyncThunk('cards/updatePost', async (postData) 
   }
 });
 
-
-
 // Slice for cards
 
 export const cardsSlice = createSlice({

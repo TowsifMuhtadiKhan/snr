@@ -16,6 +16,8 @@ function App() {
           <Route path="/" element={<Card />} />
           <Route path="/posts/:id" element={<Edit />} /> 
           <Route path="/auth/login" element={<Login />} /> 
+          <Route path="/" element={<Navbar />} />
+          <Route path="/" element={<Footer />} />
         </Routes>
         <Footer />
       </>
