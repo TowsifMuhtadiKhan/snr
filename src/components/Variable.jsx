@@ -64,50 +64,50 @@ export default function VariableTable() {
   return (
     <div>
       <Button
-  variant="contained"
-  color="primary"
-  onClick={fetchData}
-  sx={{ display: 'block', margin: 'auto', mt: 2 }}
->
-  Fetch Data
-</Button>
-      <TableContainer component={Paper} sx={{ width: '80%', margin:'auto', marginTop: '10px', marginBottom:'10px'}}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Serial Number</TableCell>
-              <TableCell>User ID</TableCell>
-              <TableCell>Full Name</TableCell>
-              <TableCell>Email</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading ? (
+          variant="contained"
+          color="primary"
+          onClick={fetchData}
+          sx={{ display: 'block', margin: 'auto', mt: 2 }}
+      >
+        Fetch Data
+      </Button>
+        <TableContainer component={Paper} sx={{ width: '80%', margin:'auto', marginTop: '10px', marginBottom:'10px'}}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={4}>Loading...</TableCell>
+                <TableCell>Serial Number</TableCell>
+                <TableCell>User ID</TableCell>
+                <TableCell>Full Name</TableCell>
+                <TableCell>Email</TableCell>
               </TableRow>
-            ) : (
-              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>{index + 1 + page * rowsPerPage}</TableCell>
-                  <TableCell>{row.userId}</TableCell>
-                  <TableCell>{row.fullName}</TableCell>
-                  <TableCell>{row.email}</TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </TableContainer>
-    </div>
+            </TableHead>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={4}>Loading...</TableCell>
+                  </TableRow>
+                    ) : (
+                      data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{index + 1 + page * rowsPerPage}</TableCell>
+                          <TableCell>{row.userId}</TableCell>
+                          <TableCell>{row.fullName}</TableCell>
+                          <TableCell>{row.email}</TableCell>
+                        </TableRow>
+                      ))
+                    )}
+              </TableBody>
+          </Table>
+            <TablePagination
+               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+               component="div"
+               count={data.length}
+               rowsPerPage={rowsPerPage}
+               page={page}
+               onPageChange={handleChangePage}
+               onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </TableContainer>
+  </div>
   );
 }
